@@ -59,5 +59,6 @@ else :
       endTime = time.time()
       elapsedTime = endTime - startTime
       print("Elapsed Time = %s" % elapsedTime)
+      print("Process is currently up and running !")
    else :
       print('Unable to start the service')

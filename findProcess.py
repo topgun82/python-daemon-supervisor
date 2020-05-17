@@ -55,7 +55,7 @@ else :
           print('Attemp no :', i)
           # making delay for 1 second
           time.sleep(float(secsRestart))
-          os.system("sudo service" +processNameVal+ "restart")
+          os.system("sudo service " +processNameVal+ " restart")
       endTime = time.time()
       elapsedTime = endTime - startTime
       print("Elapsed Time = %s" % elapsedTime)

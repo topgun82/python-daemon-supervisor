@@ -2,7 +2,6 @@ import psutil
 import time
 import sys
 
-
 '''def findProcessIdByName(processName, secsRestart, noOfAttempts, intervalsSecs, genLogs):'''
 def findProcessIdByName(processName):
     '''
@@ -43,10 +42,20 @@ else :
    getOpt = raw_input("Would you like to start the process?(yes/no)")
    getOptVal = str(getOpt)
    print(getOptVal)
+
    if any([getOptVal == "yes", getOptVal == "YES", getOptVal == "Y"]):
       print('Start the service------------')
-
-
+      secsRestart = raw_input("Seconds to wait between attempts to restart service : ")
+      noOfAttempts = raw_input("Number of attempts before giving up : ")
+      intervalsSecs = raw_input("Check interval in seconds : ")
+        startTime = time.time()
+        for i in range(0, noOfAttempts):
+          print('Attemp no :' i)
+          # making delay for 1 second
+          time.sleep(secsRestart)
+          os.system("sudo service" +processNameVal+ "restart")
+        endTime = time.time()
+        elapsedTime = endTime - startTime
+        print("Elapsed Time = %s" % elapsedTime)
    else :
       print('Unable to start the service')
-

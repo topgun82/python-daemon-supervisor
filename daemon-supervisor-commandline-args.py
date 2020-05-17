@@ -4,7 +4,7 @@ import sys
 import argparse
 
 parser = argparse.ArgumentParser(description='The idea is to create a daemon supervisor. This tool should check that the process is running and at all times and starts it in case is down.', add_help=False)
-parser.add_argument('--help', action='help', help='Example format : python findProcess.py <processName> <secsRestart> <noOfAttempts> <intervalsSecs> <genLogs>, Example Input : python findProcess.py cron 1 2 1 y')
+parser.add_argument('--help', action='help', help='Example format : python daemon-supervisor-commandline-args.py <processName> <secsRestart> <noOfAttempts> <intervalsSecs> <genLogs>, Example Input : python daemon-supervisor-commandline-args.py cron 1 2 1 y')
 parser.add_argument('processName', type=open, help='Name of the process to supervise')
 parser.add_argument('secsRestart', type=int, help='Seconds to wait between attempts to restart service')
 parser.add_argument('noOfAttempts', type=int, help='Number of attempts before giving up')
@@ -46,4 +46,26 @@ if len(listOfProcessIds) > 0:
        processCreationTime =  time.strftime('%Y-%m-%d %H:%M:%S', time.localtime(elem['create_time']))
        print((processID ,processName,processCreationTime ))
 else :
-   print('No Running Process found with given text')
+   print(processNameVal,'process/service is currently down !')
+   getOpt = raw_input("Would you like to start the process?(yes/no)")
+   getOptVal = str(getOpt)
+   print(getOptVal)
+
+   if any([getOptVal == "yes", getOptVal == "YES", getOptVal == "Y"]):
+      print('Start the service------------')
+      secsRestart = args.secsRestart
+      noOfAttempts = args.noOfAttempts
+      intervalsSecs = args.intervalsSecs
+      startTime = time.time()
+      print(noOfAttempts)
+      for i in range(2):
+          print('Attemp no :', i)
+          # making delay for 1 second
+          time.sleep(float(secsRestart))
+          os.system("sudo service " +processNameVal+ " restart")
+      endTime = time.time()
+      elapsedTime = endTime - startTime
+      print("Elapsed Time = %s" % elapsedTime)
+      print("Process is currently up and running !")
+   else :
+      print('Unable to start the service')
